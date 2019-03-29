@@ -22,6 +22,8 @@ class Script {
       : file_name_(file), _error_(logging::console_callback) {}
   virtual ~Script() {}
 
+  virtual bool valid() const { return false; }
+
   virtual bool has(const std::string& val) { return false; }
   virtual bool hasi(const std::string& val) { return false; }
   virtual bool hasvi(const std::string& val) { return false; }
@@ -31,6 +33,7 @@ class Script {
   virtual bool hasvs(const std::string& val) { return false; }
   virtual bool hasf(const std::string& val) { return false; }
 
+  virtual Var get(const std::string& val) { return Var(); }
   virtual int geti(const std::string& val) { return int(); }
   virtual std::vector<int> getvi(const std::string& val) {
     return std::vector<int>();

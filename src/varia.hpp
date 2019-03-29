@@ -3,6 +3,8 @@
 
 #include "script.hpp"
 #include "lua.hpp"
+#include "python.hpp"
+#include "variable.hpp"
 
 namespace varia {
   

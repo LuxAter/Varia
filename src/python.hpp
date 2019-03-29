@@ -1,5 +1,5 @@
-#ifndef VARIA_LUA_HPP_
-#define VARIA_LUA_HPP_
+#ifndef VARIA_PYTHON_HPP_
+#define VARIA_PYTHON_HPP_
 
 #include <memory>
 #include <string>
@@ -9,19 +9,17 @@
 #include "variable.hpp"
 
 extern "C" {
-#include <lua5.3/lauxlib.h>
-#include <lua5.3/lua.h>
-#include <lua5.3/lualib.h>
+#include <Python.h>
 }
 
 namespace varia {
-class Lua : public Script {
+class Python : public Script {
  public:
-  Lua();
-  explicit Lua(const std::string& file);
-  Lua(const Lua& lua);
+  Python();
+  explicit Python(const std::string& file);
+  Python(const Python& python);
 
-  virtual ~Lua();
+  virtual ~Python();
 
   virtual bool valid() const;
 
@@ -49,8 +47,8 @@ class Lua : public Script {
 
  private:
   std::shared_ptr<int> valid_check_;
-  lua_State* state_;
+  PyObject* module_;
 };
 }  // namespace varia
 
-#endif  // VARIA_LUA_HPP_
+#endif  // VARIA_PYTHON_HPP_

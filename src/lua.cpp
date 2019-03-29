@@ -28,6 +28,9 @@ varia::Lua::~Lua() {
   state_ = nullptr;
   valid_check_ = nullptr;
 }
+
+bool varia::Lua::valid() const { return valid_check_.use_count() != 0; }
+
 bool varia::Lua::has(const std::string& val) {
   lua_getglobal(state_, val.c_str());
   bool res = !lua_isnil(state_, -1);
@@ -99,6 +102,47 @@ bool varia::Lua::hasf(const std::string& val) {
   bool res = lua_isfunction(state_, -1);
   lua_pop(state_, -1);
   return res;
+}
+
+varia::Var varia::Lua::get(const std::string& val){
+  lua_getglobal(state_, val.c_str());
+  if (lua_isnil(state_, -1)) {
+    return Var();
+  } else if (lua_isnumber(state_, -1)) {
+    return Var(lua_tonumber(state_, -1));
+  } else if (lua_isstring(state_, -1)) {
+    return Var(lua_tostring(state_, -1));
+  } else if (lua_istable(state_, -1)) {
+    lua_pushnil(state_);
+    lua_next(state_, -2);
+    if (lua_isnumber(state_, -1)) {
+      std::vector<double> vec;
+      vec.push_back(static_cast<double>(lua_tonumber(state_, -1)));
+      lua_pop(state_, 1);
+      while (lua_next(state_, -2)) {
+        vec.push_back(static_cast<double>(lua_tonumber(state_, -1)));
+        lua_pop(state_, 1);
+      }
+      int n = lua_gettop(state_);
+      lua_pop(state_, n);
+      return vec;
+    } else if (lua_isstring(state_, -1)) {
+      std::vector<std::string> vec;
+      vec.push_back(std::string(lua_tostring(state_, -1)));
+      lua_pop(state_, 1);
+      while (lua_next(state_, -2)) {
+        vec.push_back(std::string(lua_tostring(state_, -1)));
+        lua_pop(state_, 1);
+      }
+      int n = lua_gettop(state_);
+      lua_pop(state_, n);
+      return vec;
+    } else {
+      return Var();
+    }
+  } else {
+    return Var();
+  }
 }
 
 int varia::Lua::geti(const std::string& val) {
@@ -241,6 +285,34 @@ varia::Var varia::Lua::call_func(const std::string& func,
     return Var(lua_tonumber(state_, -1));
   } else if (lua_isstring(state_, -1)) {
     return Var(lua_tostring(state_, -1));
+  } else if (lua_istable(state_, -1)) {
+    lua_pushnil(state_);
+    lua_next(state_, -2);
+    if (lua_isnumber(state_, -1)) {
+      std::vector<double> vec;
+      vec.push_back(static_cast<double>(lua_tonumber(state_, -1)));
+      lua_pop(state_, 1);
+      while (lua_next(state_, -2)) {
+        vec.push_back(static_cast<double>(lua_tonumber(state_, -1)));
+        lua_pop(state_, 1);
+      }
+      int n = lua_gettop(state_);
+      lua_pop(state_, n);
+      return vec;
+    } else if (lua_isstring(state_, -1)) {
+      std::vector<std::string> vec;
+      vec.push_back(std::string(lua_tostring(state_, -1)));
+      lua_pop(state_, 1);
+      while (lua_next(state_, -2)) {
+        vec.push_back(std::string(lua_tostring(state_, -1)));
+        lua_pop(state_, 1);
+      }
+      int n = lua_gettop(state_);
+      lua_pop(state_, n);
+      return vec;
+    } else {
+      return Var();
+    }
   } else {
     return Var();
   }

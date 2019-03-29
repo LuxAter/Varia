@@ -28,12 +28,18 @@ struct Var {
   Var(const std::vector<std::string>& v)
       : vs(v), vd(), vi(), s(), d(), i(), type_(STRING_VECTOR) {}
 
-  operator int() const { return i; }
-  operator double() const { return d; }
-  operator std::string() const { return s; }
-  operator std::vector<int>() const { return vi; }
-  operator std::vector<double>() const { return vd; }
-  operator std::vector<std::string>() const { return vs; }
+  inline operator int() const {
+    if (type_ == DOUBLE) return static_cast<int>(d);
+    return i;
+  }
+  inline operator double() const {
+    if (type_ == INT) return static_cast<double>(i);
+    return d;
+  }
+  inline operator std::string() const { return s; }
+  inline operator std::vector<int>() const { return vi; }
+  inline operator std::vector<double>() const { return vd; }
+  inline operator std::vector<std::string>() const { return vs; }
 
   std::vector<std::string> vs;
   std::vector<double> vd;
