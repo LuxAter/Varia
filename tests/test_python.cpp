@@ -127,19 +127,19 @@ TEST(PythonTest, GetVar) {
 
 TEST(PythonTest, FunctionCall) {
   varia::Script* script = varia::load_script("test_python.py");
-  EXPECT_EQ(script->call("func0"), varia::Var());
-  EXPECT_EQ(script->call("func1", 1.0), varia::Var());
-  EXPECT_EQ(script->call("func2", 1.0, 2.0), varia::Var());
-  EXPECT_EQ(script->call("func0r"), varia::Var(3.1415));
-  EXPECT_EQ(script->call("func1r", 1.0), varia::Var(std::sin(1.0)));
-  EXPECT_EQ(script->call("func2r", 1.0, 2.0),
+  EXPECT_EQ(script->vcall("func0"), varia::Var());
+  EXPECT_EQ(script->vcall("func1", 1.0), varia::Var());
+  EXPECT_EQ(script->vcall("func2", 1.0, 2.0), varia::Var());
+  EXPECT_EQ(script->vcall("func0r"), varia::Var(3.1415));
+  EXPECT_EQ(script->vcall("func1r", 1.0), varia::Var(std::sin(1.0)));
+  EXPECT_EQ(script->vcall("func2r", 1.0, 2.0),
             varia::Var(std::sin(1.0) * std::cos(2.0)));
   delete script;
 }
 
 TEST(PythonTest, Functional) {
   varia::Script* script = varia::load_script("test_python.py");
-  auto func = script->func<double, double>("func2r");
+  auto func = script->vfunc<double, double>("func2r");
   EXPECT_EQ(func(1.0, 2.0), varia::Var(std::sin(1.0) * std::cos(2.0)));
   EXPECT_EQ(func(2.0, 1.0), varia::Var(std::sin(2.0) * std::cos(1.0)));
   delete script;

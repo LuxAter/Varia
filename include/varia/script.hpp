@@ -47,22 +47,43 @@ class Script {
     return std::vector<std::string>();
   }
 
-  Var call(const std::string& func) {
+  template <typename _R>
+  _R call(const std::string& func) {
+    std::vector<Var> params;
+    return _R(call_func(func, params));
+  }
+  template <typename _R, typename... _ARGS>
+  _R call(const std::string& func, const _ARGS&... args) {
+    std::vector<Var> params = construct_args(args...);
+    return _R(call_func(func, params));
+  }
+  template <typename _R>
+  std::function<_R()> func(const std::string& func) {
+    return [func, this]() { return _R(this->vcall(func)); };
+  }
+  template <typename _R, typename... _ARGS>
+  std::function<_R(const _ARGS&...)> func(const std::string& func) {
+    return [func, this](const _ARGS&... args) {
+      return _R(this->vcall(func, args...));
+    };
+  }
+
+  Var vcall(const std::string& func) {
     std::vector<Var> params;
     return call_func(func, params);
   }
   template <typename... _ARGS>
-  Var call(const std::string& func, const _ARGS&... args) {
+  Var vcall(const std::string& func, const _ARGS&... args) {
     std::vector<Var> params = construct_args(args...);
     return call_func(func, params);
   }
-  std::function<Var()> func(const std::string& func) {
-    return [func, this]() { return this->call(func); };
+  std::function<Var()> vfunc(const std::string& func) {
+    return [func, this]() { return this->vcall(func); };
   }
   template <typename... _ARGS>
-  std::function<Var(const _ARGS&...)> func(const std::string& func) {
+  std::function<Var(const _ARGS&...)> vfunc(const std::string& func) {
     return [func, this](const _ARGS&... args) {
-      return this->call(func, args...);
+      return this->vcall(func, args...);
     };
   }
 

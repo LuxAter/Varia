@@ -19,9 +19,9 @@ int main(int argc, char* argv[]) {
 
   std::cout << pyscript->get("func") << ":" << luascript->get("func") << "\n";
 
-  std::cout << pyscript->call("func", 5) << ":" << luascript->call("func", 5)
+  std::cout << pyscript->vcall("func", 5) << ":" << luascript->vcall("func", 5)
             << "\n";
-  auto tmp = pyscript->func<int>("func");
+  auto tmp = pyscript->vfunc<int>("func");
   std::cout << tmp(10) << '\n';
 
 
