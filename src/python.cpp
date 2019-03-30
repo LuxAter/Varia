@@ -9,6 +9,8 @@
 #include "script.hpp"
 #include "variable.hpp"
 
+#ifdef VARIA_PYTHON
+
 extern "C" {
 #include <Python.h>
 }
@@ -265,3 +267,4 @@ varia::Var varia::Python::call_func(const std::string& func,
     return Var();
   }
 }
+#endif  // VARIA_PYTHON

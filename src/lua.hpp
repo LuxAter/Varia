@@ -1,5 +1,6 @@
 #ifndef VARIA_LUA_HPP_
 #define VARIA_LUA_HPP_
+#ifdef VARIA_LUA
 
 #include <memory>
 #include <string>
@@ -53,4 +54,5 @@ class Lua : public Script {
 };
 }  // namespace varia
 
+#endif  // VARIA_LUA
 #endif  // VARIA_LUA_HPP_

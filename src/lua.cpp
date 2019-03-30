@@ -6,6 +6,8 @@
 #include "script.hpp"
 #include "variable.hpp"
 
+#ifdef VARIA_LUA
+
 extern "C" {
 #include <lua5.3/lauxlib.h>
 #include <lua5.3/lua.h>
@@ -317,3 +319,5 @@ varia::Var varia::Lua::call_func(const std::string& func,
     return Var();
   }
 }
+
+#endif  // VARIA_LUA

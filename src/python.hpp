@@ -1,5 +1,6 @@
 #ifndef VARIA_PYTHON_HPP_
 #define VARIA_PYTHON_HPP_
+#ifdef VARIA_PYTHON
 
 #include <memory>
 #include <string>
@@ -51,4 +52,5 @@ class Python : public Script {
 };
 }  // namespace varia
 
+#endif  // VARIA_PYTHON
 #endif  // VARIA_PYTHON_HPP_
