@@ -24,6 +24,7 @@ endif()
 # }}}
 
 # LIBVARIA.A {{{
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/varia/")
 file(GLOB_RECURSE lib_src "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.cpp")
 list(REMOVE_ITEM lib_src "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 add_library(varia ${lib_src})

@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "../src/varia.hpp"
+#include "varia.hpp"
 
 TEST(LuaTest, LoadScript) {
   varia::Script* script = varia::load_script("test_lua.lua");
