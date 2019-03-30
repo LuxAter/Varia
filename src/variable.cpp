@@ -52,3 +52,25 @@ std::ostream& varia::operator<<(std::ostream& out, const Var& lhs) {
   }
   return out;
 }
+
+bool varia::operator==(const Var& lhs, const Var& rhs){
+  if(lhs.type_ != rhs.type_) return false;
+  switch(lhs.type_){
+    case Var::NONE:
+      return true;
+    case Var::INT:
+      return lhs.i == rhs.i;
+    case Var::DOUBLE:
+      return lhs.d == rhs.d;
+    case Var::STRING:
+      return lhs.s == rhs.s;
+    case Var::INT_VECTOR:
+      return lhs.vi == rhs.vi;
+    case Var::DOUBLE_VECTOR:
+      return lhs.vd == rhs.vd;
+    case Var::STRING_VECTOR:
+      return lhs.vs == rhs.vs;
+    default:
+      return false;
+  }
+}

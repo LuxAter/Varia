@@ -169,7 +169,7 @@ std::vector<int> varia::Lua::getvi(const std::string& val) {
   return res;
 }
 double varia::Lua::getd(const std::string& val) {
-  int res = int();
+  double res = double();
   lua_getglobal(state_, val.c_str());
   if (lua_isnumber(state_, -1)) {
     res = static_cast<double>(lua_tonumber(state_, -1));

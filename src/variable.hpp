@@ -51,6 +51,7 @@ struct Var {
 };
 
 std::ostream& operator<<(std::ostream& out, const Var& lhs);
+bool operator==(const Var& lhs, const Var& rhs);
 
 template <typename _T>
 std::vector<Var> construct_args(const _T& v) {

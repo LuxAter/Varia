@@ -47,10 +47,23 @@ class Script {
     return std::vector<std::string>();
   }
 
+  Var call(const std::string& func) {
+    std::vector<Var> params;
+    return call_func(func, params);
+  }
   template <typename... _ARGS>
   Var call(const std::string& func, const _ARGS&... args) {
     std::vector<Var> params = construct_args(args...);
     return call_func(func, params);
+  }
+  std::function<Var()> func(const std::string& func) {
+    return [func, this]() { return this->call(func); };
+  }
+  template <typename... _ARGS>
+  std::function<Var(const _ARGS&...)> func(const std::string& func) {
+    return [func, this](const _ARGS&... args) {
+      return this->call(func, args...);
+    };
   }
 
   void set_error_callback(

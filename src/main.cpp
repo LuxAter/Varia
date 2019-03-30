@@ -3,8 +3,8 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) {
-  varia::Script* pyscript = new varia::Python("pyscript");
-  varia::Script* luascript = new varia::Lua("luascript.lua");
+  varia::Script* pyscript = varia::load_script("pyscript.py");
+  varia::Script* luascript = varia::load_script("luascript.lua");
 
   std::cout << pyscript->has("func") << "::" << pyscript->hasi("func") << ":"
             << pyscript->hasvi("func") << ":" << pyscript->hasd("func") << ":"
@@ -21,6 +21,9 @@ int main(int argc, char* argv[]) {
 
   std::cout << pyscript->call("func", 5) << ":" << luascript->call("func", 5)
             << "\n";
+  auto tmp = pyscript->func<int>("func");
+  std::cout << tmp(10) << '\n';
+
 
   delete pyscript;
   delete luascript;

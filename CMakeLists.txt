@@ -43,5 +43,7 @@ if(TESTS)
   file(GLOB_RECURSE test_src "${CMAKE_CURRENT_SOURCE_DIR}" "tests/*.cpp")
   add_executable(tests ${test_src})
   target_link_libraries(tests pthread gtest gtest_main varia)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests/test_lua.lua" "${CMAKE_CURRENT_BINARY_DIR}/test_lua.lua" COPYONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests/test_python.py" "${CMAKE_CURRENT_BINARY_DIR}/test_python.py" COPYONLY)
 endif()
 # }}}
