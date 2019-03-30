@@ -57,10 +57,6 @@ class Script {
     std::vector<Var> params = construct_args(args...);
     return _R(call_func(func, params));
   }
-  template <typename _R>
-  std::function<_R()> func(const std::string& func) {
-    return [func, this]() { return _R(this->vcall(func)); };
-  }
   template <typename _R, typename... _ARGS>
   std::function<_R(const _ARGS&...)> func(const std::string& func) {
     return [func, this](const _ARGS&... args) {
